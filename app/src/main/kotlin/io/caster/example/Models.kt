@@ -16,12 +16,13 @@ class Deck(cards: List<Card>) {
         cards.shuffle()
     }
 
-    fun draw() = {
-        if (cards.isEmpty()) {
-            throw EmptyDeckException()
-        }
+    fun draw() = if (isEmpty()) {
+        throw EmptyDeckException()
+    } else {
         cards.removeAt(0)
     }
+
+    override fun toString() = "Deck($size cards left)"
 }
 
 /**
@@ -42,6 +43,8 @@ class Hand {
             .map { card -> card.rank }
             .map { rank -> rank.value }
             .sum()
+
+    override fun toString() = "Hand(cards=$cards)"
 }
 
 /**
@@ -61,9 +64,7 @@ enum class Suit(private val symbol: String) {
     Diamonds("♦"),
     Spades("♠");
 
-    override fun toString(): String {
-        return symbol
-    }
+    override fun toString() = symbol
 }
 
 /**

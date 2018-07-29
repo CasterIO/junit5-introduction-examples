@@ -1,10 +1,10 @@
 package io.caster.example.test
 
 import io.caster.example.Card
+import io.caster.example.Deck
 import io.caster.example.Rank
 import io.caster.example.Suit
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 
@@ -37,5 +37,10 @@ class Tests {
             // Invalid
             Rank.Num(11)
         }
+    }
+
+    @Test
+    fun emptyDeckIsEmpty() {
+        assertTrue(Deck(emptyList()).isEmpty())
     }
 }
