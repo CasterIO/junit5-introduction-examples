@@ -22,8 +22,13 @@ class Deck(cards: List<Card>) {
         cards.removeAt(0)
     }
 
-    override fun toString() = "Deck($size cards left)"
+    override fun toString() = "Deck of $size"
 }
+
+/**
+ * Represents a player of the Blackjack game.
+ */
+data class Player(val name: String, val hand: Hand)
 
 /**
  * Represents the "hand" of a player, containing stacked cards.
@@ -39,12 +44,19 @@ class Hand {
      */
     fun add(card: Card) = _cards.add(card)
 
-    fun sum() = _cards
-            .map { card -> card.rank }
-            .map { rank -> rank.value }
-            .sum()
+    fun sum(): Int {
+        var sum = 0
+        for (card in cards) {
+            sum += card.rank.value(sum)
+        }
+        return sum
+    }
 
     override fun toString() = "Hand(cards=$cards)"
+
+    operator fun plusAssign(card: Card) {
+        add(card)
+    }
 }
 
 /**
@@ -70,26 +82,55 @@ enum class Suit(private val symbol: String) {
 /**
  * Represents the different ranks for a card.
  */
-sealed class Rank(val symbol: String, val value: Int) {
+sealed class Rank(val symbol: String) {
+
+    /**
+     * The value of a card with this rank.
+     * When summing up a hand, the current sum
+     * is passed to this method as well,
+     * in order to allow for conditional logic
+     * that determines the value of this rank.
+     * The prime example is the varying value for Aces.
+     */
+    abstract fun value(currentSum: Int): Int
+
+    override fun toString(): String = symbol
 
     /**
      * Represents card values between "2" and "10".
      * Will throw an IllegalArgumentException for values outside that range
      */
-    class Num(value: Int) : Rank(symbol = value.toString(), value = value) {
+    class Num(private val number: Int) : Rank(symbol = number.toString()) {
+        override fun value(currentSum: Int) = number
+
         init {
-            if (value !in 2..10) {
-                throw IllegalArgumentException("illegal Num: $value")
+            // Check boundaries
+            if (number !in 2..10) {
+                throw IllegalArgumentException("illegal Num: $number")
             }
         }
     }
 
-    /* Remaining card ranks, implemented as singleton objects */
+    /**
+     * Foundation for Face cards (Jack, Queen, King),
+     * all using the same base value
+     */
+    abstract class FaceRank(symbol: String) : Rank(symbol = symbol) {
+        override fun value(currentSum: Int) = 10
+    }
 
-    object Jack : Rank(symbol = "J", value = 10)
-    object Queen : Rank(symbol = "Q", value = 10)
-    object King : Rank(symbol = "K", value = 10)
-    object Ace : Rank(symbol = "A", value = 11)
+    object Jack : FaceRank(symbol = "J")
+    object Queen : FaceRank(symbol = "Q")
+    object King : FaceRank(symbol = "K")
 
-    override fun toString(): String = symbol
+    /**
+     * Ace cards with conditionally differing values
+     */
+    object Ace : Rank(symbol = "A") {
+        override fun value(currentSum: Int) = if (currentSum + 11 > TARGET_SUM) {
+            1
+        } else {
+            11
+        }
+    }
 }
