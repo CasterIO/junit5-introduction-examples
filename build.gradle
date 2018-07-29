@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = "1.2.10"
+    ext.kotlin_version = "1.2.51"
 
     repositories {
         mavenCentral()
@@ -11,31 +11,10 @@ buildscript {
     }
 }
 
-apply plugin: "kotlin"
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-repositories {
-    mavenCentral()
-    google()
-    jcenter()
-}
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "skipped", "passed", "failed"
+subprojects {
+    repositories {
+        mavenCentral()
+        google()
+        jcenter()
     }
-}
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.2.0"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.2.0"
 }
