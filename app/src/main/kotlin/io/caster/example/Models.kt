@@ -115,13 +115,13 @@ sealed class Rank(val symbol: String) {
      * Foundation for Face cards (Jack, Queen, King),
      * all using the same base value
      */
-    abstract class FaceRank(symbol: String) : Rank(symbol = symbol) {
+    abstract class Face(symbol: String) : Rank(symbol = symbol) {
         override fun value(currentSum: Int) = 10
     }
 
-    object Jack : FaceRank(symbol = "J")
-    object Queen : FaceRank(symbol = "Q")
-    object King : FaceRank(symbol = "K")
+    object Jack : Face(symbol = "J")
+    object Queen : Face(symbol = "Q")
+    object King : Face(symbol = "K")
 
     /**
      * Ace cards with conditionally differing values

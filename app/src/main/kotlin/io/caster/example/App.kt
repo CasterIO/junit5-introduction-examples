@@ -1,19 +1,5 @@
 package io.caster.example
 
-// Generate a standard deck of playing cards:
-// For each suit, add the number values from 2 to 10,
-// as well as the pictured values.
-private val ALL_CARDS = Suit.values()
-        .flatMap { suit ->
-            mutableListOf<Card>().apply {
-                addAll((2..10).map { Card(rank = Rank.Num(it), suit = suit) })
-                add(Card(rank = Rank.Jack, suit = suit))
-                add(Card(rank = Rank.Queen, suit = suit))
-                add(Card(rank = Rank.King, suit = suit))
-                add(Card(rank = Rank.Ace, suit = suit))
-            }
-        }
-
 /**
  * Runs the game logic for the given player.
  * Returns their result, or null if they lose
@@ -70,19 +56,14 @@ private fun runGameLoop(deck: Deck, player: Player, scoreToBeat: Int? = null): I
  * Given two players and their results in this round, determine who won (if anybody)
  */
 fun determineWinner(player1: Player, player1Result: Int?, player2: Player, player2Result: Int?): Player? {
-    return if (player1Result == null && player2Result == null) {
-        // Nobody scored anything - no winner
-        null
-    } else {
-        // At least 1 player scored something; assume 0 for non-scoring players and compare
-        val player1Score = player1Result ?: 0
-        val player2Score = player2Result ?: 0
+    // Assume 0 for non-scoring players and compare their results
+    val player1Score = player1Result ?: 0
+    val player2Score = player2Result ?: 0
 
-        when {
-            player1Score > player2Score -> player1
-            player1Score < player2Score -> player2
-            else -> player2
-        }
+    return when {
+        player1Score > player2Score -> player1
+        player1Score < player2Score -> player2
+        else -> null
     }
 }
 
@@ -90,13 +71,12 @@ fun determineWinner(player1: Player, player1Result: Int?, player2: Player, playe
  * Main method
  */
 fun main(args: Array<String>) {
-    // Create two players, sharing from a single deck of cards
+    // 1) Prepare deck
+    // 2) Name entry
+    // 3) Shuffle deck
+    // 4) Start playing
     val deck = Deck(ALL_CARDS)
 
-    // Start the game loop:
-    // 1) Name entry
-    // 2) Shuffle deck
-    // 3) Start playing
     println("""
 
         -------------------
