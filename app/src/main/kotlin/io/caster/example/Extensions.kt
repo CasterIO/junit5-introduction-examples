@@ -1,5 +1,9 @@
 package io.caster.example
 
+import android.app.Activity
+import android.support.annotation.IdRes
+import android.view.View
+
 fun readLine(message: String? = null): String? {
     message?.let {
         println(it)
@@ -12,3 +16,9 @@ fun readLine(message: String? = null): String? {
         input
     }
 }
+
+fun <T : View> Activity.viewById(@IdRes res: Int): Lazy<T> {
+    return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
+}
+
+fun Int.orNullIfLessThan(threshold: Int): Int? = if (this <= threshold) null else this

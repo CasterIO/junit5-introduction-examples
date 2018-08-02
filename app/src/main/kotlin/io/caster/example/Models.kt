@@ -4,9 +4,9 @@ package io.caster.example
  * Represents a deck of cards, which can be shuffled and drawn from.
  * Won't mutate the given list of cards, instead holds a mutable copy of its data.
  */
-class Deck(cards: List<Card>) {
+class Deck(_cards: List<Card>) {
 
-    private var cards = cards.toMutableList()
+    private var cards = _cards.toMutableList()
 
     val size get() = cards.size
 
@@ -28,14 +28,13 @@ class Deck(cards: List<Card>) {
 /**
  * Represents a player of the Blackjack game.
  */
-data class Player(val name: String, val hand: Hand)
+typealias Player = String
 
 /**
  * Represents the "hand" of a player, containing stacked cards.
  */
-class Hand {
+class Hand(private var _cards: MutableList<Card> = mutableListOf<Card>()) {
 
-    private var _cards = mutableListOf<Card>()
     val cards get() = _cards.toList()
 
     /**
@@ -82,7 +81,7 @@ enum class Suit(private val symbol: String) {
 /**
  * Represents the different ranks for a card.
  */
-sealed class Rank(val symbol: String) {
+open class Rank(val symbol: String) {
 
     /**
      * The value of a card with this rank.
@@ -92,7 +91,7 @@ sealed class Rank(val symbol: String) {
      * that determines the value of this rank.
      * The prime example is the varying value for Aces.
      */
-    abstract fun value(currentSum: Int): Int
+    open fun value(currentSum: Int): Int = 0
 
     override fun toString(): String = symbol
 

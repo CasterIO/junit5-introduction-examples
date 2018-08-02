@@ -1,20 +1,46 @@
-apply plugin: "kotlin"
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "de.mannodermaus.android-junit5"
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "skipped", "passed", "failed"
+android {
+    compileSdkVersion 28
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "io.caster.example"
+        minSdkVersion 26
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+    }
+
+    testOptions {
+        junitPlatform {
+            // Configure JUnit 5 tests here
+        }
+        unitTests.all {
+            testLogging {
+                events "skipped", "passed", "failed"
+            }
+        }
     }
 }
 
 dependencies {
+    implementation "com.android.support:appcompat-v7:28.0.0-beta01"
+    implementation "com.android.support.constraint:constraint-layout:1.1.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.2.0"

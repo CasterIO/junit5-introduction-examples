@@ -48,3 +48,4 @@ gradle-app.setting
 # IntelliJ
 .idea/
 out/
+local.properties
