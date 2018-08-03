@@ -4,9 +4,9 @@ package io.caster.example
  * Represents a deck of cards, which can be shuffled and drawn from.
  * Won't mutate the given list of cards, instead holds a mutable copy of its data.
  */
-class Deck(_cards: List<Card>) {
+class Deck(cards: List<Card>) {
 
-    private var cards = _cards.toMutableList()
+    private var cards = cards.toMutableList()
 
     val size get() = cards.size
 
@@ -22,7 +22,10 @@ class Deck(_cards: List<Card>) {
         cards.removeAt(0)
     }
 
-    override fun toString() = "Deck of $size"
+    override fun toString() = if (isEmpty())
+        "Empty Deck"
+    else
+        "Deck of $size"
 }
 
 /**
