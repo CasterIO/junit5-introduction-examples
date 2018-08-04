@@ -1,14 +1,17 @@
 package io.caster.example.test
 
+import io.caster.example.Card
 import io.caster.example.Rank
+import io.caster.example.Rank.Num
+import io.caster.example.Suit.Hearts
 import io.caster.example.TARGET_SUM
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Assumptions.assumeTrue
 import org.junit.jupiter.api.Assumptions.assumingThat
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS
-import java.time.LocalTime
 import java.util.*
 
 @TestInstance(PER_CLASS)
@@ -16,11 +19,6 @@ class RankTests {
 
     @Test
     fun anAceCountsOnlyAs1WhenItWouldOtherwiseCauseABust() {
-        // For demonstration purposes, this test only runs every 30 seconds
-        assumeTrue(LocalTime.now().second >= 30) {
-            "This test only runs in the second half of each minute!"
-        }
-
         // Assume that a player is 6 points apart from a Blackjack
         val closeToBustSum = TARGET_SUM - 6
         assertTrue(Rank.Ace.value(currentSum = closeToBustSum) == 1)
@@ -40,5 +38,13 @@ class RankTests {
             println("Performing the 'is 1?' check against: $randomSum")
             assertTrue(Rank.Ace.value(currentSum = randomSum) == 1)
         }
+    }
+
+    @Disabled
+    @Test
+    @DisplayName("Disabled, because trying to create a Number Card not in [2..10] would fail")
+    fun disabledBecauseTryingToCreateANumberedCardOutsideTheAllowedBoundsWouldFail() {
+        // Try to create a "13 of Hearts" card
+        Card(rank = Num(number = 13), suit = Hearts)
     }
 }
