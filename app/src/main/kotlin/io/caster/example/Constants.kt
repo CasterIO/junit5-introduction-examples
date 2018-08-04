@@ -6,6 +6,7 @@ const val TARGET_SUM = 21
 // Generate a standard deck of playing cards:
 // For each suit, add the number values from 2 to 10,
 // as well as the pictured values.
+@JvmField
 val ALL_CARDS = Suit.values()
         .flatMap { suit ->
             mutableListOf<Card>().apply {

@@ -26,6 +26,8 @@ class Deck(cards: List<Card>) {
         "Empty Deck"
     else
         "Deck of $size"
+
+    operator fun contains(card: Card) = card in cards
 }
 
 /**
