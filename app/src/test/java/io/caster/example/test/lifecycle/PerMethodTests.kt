@@ -5,8 +5,10 @@ import io.caster.example.Card
 import io.caster.example.Deck
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.TestInstance.Lifecycle.PER_METHOD
 
-class LifecycleKotlinTests {
+@TestInstance(PER_METHOD)
+class PerMethodTests {
 
     companion object {
 
@@ -30,24 +32,24 @@ class LifecycleKotlinTests {
 
     @BeforeEach
     fun onBeforeEach() {
-        println("    @BeforeEach: Draw a card from the deck.")
+        println("    @BeforeEach: Draw a card from the deck. Test Instance: $this")
         card = deck.draw()
     }
 
     @AfterEach
     fun onAfterEach() {
-        println("    @AfterEach: Remaining cards in the deck: ${deck.size}")
+        println("    @AfterEach: Remaining cards in the deck: ${deck.size}. Test Instance: $this")
     }
 
     @Test
     fun firstTest() {
-        println("        Executing the first test with: $card")
+        println("        Executing the first test with: $card on Test Instance: $this")
         assertFalse(card in deck)
     }
 
     @Test
     fun secondTest() {
-        println("        Executing the second test with: $card")
+        println("        Executing the second test with: $card on Test Instance: $this")
         assertFalse(card in deck)
     }
 }
