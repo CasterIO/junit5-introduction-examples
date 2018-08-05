@@ -1,5 +1,8 @@
 buildscript {
-    ext.kotlin_version = "1.2.51"
+    ext {
+        kotlin_version = "1.2.51"
+        junit_platform_version = "5.2.0"
+    }
 
     repositories {
         mavenCentral()

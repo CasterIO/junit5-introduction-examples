@@ -9,7 +9,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        excludeTags "slow"
+    }
     testLogging {
         events "skipped", "passed", "failed"
     }
@@ -22,7 +24,7 @@ test {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.2.0"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.2.0"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.2.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_platform_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_platform_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_platform_version"
 }
