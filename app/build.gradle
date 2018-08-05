@@ -13,6 +13,10 @@ test {
     testLogging {
         events "skipped", "passed", "failed"
     }
+
+    // Configure system properties / env vars here
+    systemProperty "some.property", "true"
+    environment "MY_ENV_VAR", "true"
 }
 
 dependencies {
