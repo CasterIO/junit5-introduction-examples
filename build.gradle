@@ -1,7 +1,9 @@
 buildscript {
     ext {
-        kotlin_version = "1.2.51"
+        android_plugin_version = "3.2.0-beta05"
+        kotlin_version = "1.2.60"
         junit_platform_version = "5.2.0"
+        android_junit5_version = "1.2.0.0"
     }
 
     repositories {
@@ -10,7 +12,9 @@ buildscript {
         jcenter()
     }
     dependencies {
+        classpath "com.android.tools.build:gradle:$android_plugin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:$android_junit5_version"
     }
 }
 

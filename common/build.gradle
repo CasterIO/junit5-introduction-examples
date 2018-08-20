@@ -1,0 +1,29 @@
+apply plugin: "kotlin"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+}
+
+test {
+    useJUnitPlatform {
+        excludeTags "slow"
+    }
+    testLogging {
+        events "skipped", "passed", "failed"
+    }
+
+    // Configure system properties / env vars here
+    systemProperty "some.property", "true"
+    environment "MY_ENV_VAR", "true"
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_platform_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_platform_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_platform_version"
+}
