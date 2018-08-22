@@ -6,7 +6,7 @@ import de.mannodermaus.example.Session
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertTrue
 
-@DisplayName("(Nested) Given a Deck")
+@DisplayName("Nested: Given a Deck")
 class NestedTests {
 
     private lateinit var deck: Deck

@@ -10,14 +10,14 @@ import org.junit.jupiter.api.condition.JRE.JAVA_8
 
 class JreTests {
 
-    @EnabledOnJre(JAVA_8)
     @Test
+    @EnabledOnJre(JAVA_8)
     fun onlyRunThisOnJava8() {
         assertTrue(2 + 2 == 4)
     }
 
-    @DisabledOnJre(JAVA_8)
     @Test
+    @DisabledOnJre(JAVA_8)
     fun doNotRunThisOnJava8() {
         assertTrue(2 + 2 == 4)
     }

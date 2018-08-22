@@ -6,18 +6,19 @@ import org.junit.jupiter.api.condition.EnabledIf
 
 class ScriptTests {
 
-    @EnabledIf("4 * 5 == 20")
     @Test
+    @EnabledIf("4 * 5 == 20")
     fun runIfJavascriptExpressionIsValid() {
         println("Static Expression is valid")
     }
 
-    @DisabledIf("Math.random() < 0.5")
     @Test
+    @DisabledIf("Math.random() < 0.5")
     fun onlyRun50PercentOfTheTime() {
         println("Executed 50% test")
     }
 
+    @Test
     @EnabledIf(
             value = [
                 "load('nashorn:mozilla_compat.js')",
@@ -25,7 +26,6 @@ class ScriptTests {
                 "var yesterday = today.minusDays(1)",
                 "yesterday.isBefore(today)"
             ])
-    @Test
     fun complexScript() {
         println("Javascript expression with multiple lines was evaluated to determine execution of this test")
     }

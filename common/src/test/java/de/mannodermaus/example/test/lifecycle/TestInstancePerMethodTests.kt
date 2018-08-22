@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.TestInstance.Lifecycle.PER_METHOD
 
 @TestInstance(PER_METHOD)
-class PerMethodTests {
+class TestInstancePerMethodTests {
 
     companion object {
 
