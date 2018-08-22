@@ -1,3 +1,9 @@
-include ':android'
+// Switch this boolean to toggle between Android & Console Application modules.
+final def USE_ANDROID = false
+
+if (USE_ANDROID) {
+    include ":android"
+} else {
+    include ":cli"
+}
 include ":common"
-include ":cli"
