@@ -69,6 +69,15 @@ class Hand(private var _cards: MutableList<Card> = mutableListOf<Card>()) {
  */
 data class Card(val rank: Rank, val suit: Suit) {
     override fun toString() = "$rank$suit"
+
+    companion object {
+        fun parse(string: String): Card {
+            val suitValue = string.last().toString()
+            val rankValue = string.dropLast(1)
+
+            return Card(rank = Rank.parse(rankValue), suit = Suit.parse(suitValue))
+        }
+    }
 }
 
 /**
@@ -81,6 +90,10 @@ enum class Suit(private val symbol: String) {
     Spades("♠");
 
     override fun toString() = symbol
+
+    companion object {
+        fun parse(string: String) = values().first { it.symbol == string }
+    }
 }
 
 /**
@@ -99,6 +112,19 @@ open class Rank(val symbol: String) {
     open fun value(currentSum: Int): Int = 0
 
     override fun toString(): String = symbol
+
+    companion object {
+        fun parse(string: String): Rank {
+            string.toIntOrNull()?.let { return Num(it) }
+            return when (string) {
+                "J" -> Jack
+                "K" -> King
+                "Q" -> Queen
+                "A" -> Ace
+                else -> throw IllegalArgumentException("illegal Rank: '$string'")
+            }
+        }
+    }
 
     /**
      * Represents card values between "2" and "10".

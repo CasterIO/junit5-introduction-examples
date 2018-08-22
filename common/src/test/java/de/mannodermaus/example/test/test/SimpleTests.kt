@@ -1,4 +1,4 @@
-package de.mannodermaus.example.test.simple
+package de.mannodermaus.example.test.test
 
 import de.mannodermaus.example.*
 import org.junit.jupiter.api.*
