@@ -64,6 +64,8 @@ class Hand(private var _cards: MutableList<Card> = mutableListOf<Card>()) {
 data class Card(val rank: Rank, val suit: Suit) {
     override fun toString() = "$rank$suit"
 
+    fun toLongString() = "${rank.toLongString()} of ${suit.toLongString()}"
+
     companion object {
         fun parse(string: String): Card {
             val suitValue = string.last().toString()
@@ -87,6 +89,8 @@ enum class Suit(private val symbol: String) {
 
     override fun toString() = symbol
 
+    fun toLongString() = name
+
     companion object {
         fun parse(string: String) = values().first { it.symbol == string }
     }
@@ -95,7 +99,7 @@ enum class Suit(private val symbol: String) {
 /**
  * Represents the different ranks for a card.
  */
-open class Rank private constructor(val symbol: String) {
+abstract class Rank private constructor(val symbol: String) {
 
     /**
      * The value of a card with this rank.
@@ -108,6 +112,8 @@ open class Rank private constructor(val symbol: String) {
     open fun value(currentSum: Int): Int = 0
 
     override fun toString(): String = symbol
+
+    abstract fun toLongString(): String
 
     companion object {
         fun parse(string: String): Rank {
@@ -127,7 +133,10 @@ open class Rank private constructor(val symbol: String) {
      * Will throw an IllegalArgumentException for values outside that range
      */
     class Num(private val number: Int) : Rank(symbol = number.toString()) {
+
         override fun value(currentSum: Int) = number
+
+        override fun toLongString() = number.toString()
 
         init {
             // Check boundaries
@@ -143,6 +152,8 @@ open class Rank private constructor(val symbol: String) {
      */
     abstract class Face(symbol: String) : Rank(symbol = symbol) {
         override fun value(currentSum: Int) = 10
+
+        override fun toLongString(): String = javaClass.simpleName
     }
 
     object Jack : Face(symbol = "J")
@@ -152,7 +163,8 @@ open class Rank private constructor(val symbol: String) {
     /**
      * Ace cards with conditionally differing values
      */
-    object Ace : Rank(symbol = "A") {
+    object Ace : Face(symbol = "A") {
+
         override fun value(currentSum: Int) = if (currentSum + 11 > TARGET_SUM) {
             1
         } else {
