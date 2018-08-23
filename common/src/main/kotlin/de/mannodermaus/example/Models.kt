@@ -48,13 +48,7 @@ class Hand(private var _cards: MutableList<Card> = mutableListOf<Card>()) {
      */
     fun add(card: Card) = _cards.add(card)
 
-    fun sum(): Int {
-        var sum = 0
-        for (card in cards) {
-            sum += card.rank.value(sum)
-        }
-        return sum
-    }
+    val sum get() = Card.sum(*cards.toTypedArray())
 
     override fun toString() = "Hand(cards=$cards)"
 
@@ -77,6 +71,8 @@ data class Card(val rank: Rank, val suit: Suit) {
 
             return Card(rank = Rank.parse(rankValue), suit = Suit.parse(suitValue))
         }
+
+        fun sum(vararg cards: Card) = cards.fold(initial = 0) { i, c -> i + c.rank.value(i) }
     }
 }
 
@@ -99,7 +95,7 @@ enum class Suit(private val symbol: String) {
 /**
  * Represents the different ranks for a card.
  */
-open class Rank(val symbol: String) {
+open class Rank private constructor(val symbol: String) {
 
     /**
      * The value of a card with this rank.

@@ -62,7 +62,7 @@ class Session(private val deck: Deck, val player: Player) {
     private var _turn: Int = 0
     val turn get() = _turn
 
-    val score: Int get() = hand.sum()
+    val score: Int get() = hand.sum
     val currentCards get() = hand.cards
 
     fun makeTurn(): TurnResult {
@@ -70,7 +70,7 @@ class Session(private val deck: Deck, val player: Player) {
         val newCard = deck.draw()
         hand += newCard
 
-        val newSum = hand.sum()
+        val newSum = hand.sum
         return when {
             newSum > TARGET_SUM -> {
                 // Went over the target

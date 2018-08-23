@@ -16,7 +16,7 @@ class EnvironmentVariableTests {
     fun onlyRunIfTheEnvironmentVariableIsSet() {
         // Check that an empty Hand has score "0"
         val hand = Hand()
-        assertTrue(hand.sum() == 0)
+        assertTrue(hand.sum == 0)
     }
 
     @Test
@@ -27,6 +27,6 @@ class EnvironmentVariableTests {
             add(Card(Rank.Ace, Suit.Spades))
         }
 
-        assertTrue(hand.sum() == 11)
+        assertTrue(hand.sum == 11)
     }
 }
