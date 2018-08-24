@@ -17,12 +17,29 @@ android {
 
     defaultConfig {
         applicationId "de.mannodermaus.example.android"
-        minSdkVersion 26
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
+        // Make sure to use the AndroidJUnitRunner (or a sub-class) in order to hook in the JUnit 5 Test Builder
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
+    }
+
+    // Since the minSdkVersion requirement for JUnit 5 Instrumentation Tests is quite high,
+    // we introduce a product flavor that uses an elevated version other than the application's default.
+    // With this, we are able to try JUnit 5 tests without sacrificing the minSdkVersion completely.
+    flavorDimensions "kind"
+    productFlavors {
+        experimental {
+            dimension "kind"
+            minSdkVersion 26
+        }
+
+        normal {
+            dimension "kind"
+        }
     }
 
     sourceSets {
@@ -39,6 +56,11 @@ android {
             }
         }
     }
+
+    packagingOptions {
+        exclude "META-INF/LICENSE.md"
+        exclude "META-INF/LICENSE-notice.md"
+    }
 }
 
 dependencies {
@@ -50,4 +72,18 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.2.0"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.2.0"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.2.0"
+
+    androidTestImplementation "com.android.support.test:runner:1.0.2"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.2"
+    androidTestRuntimeOnly "de.mannodermaus.junit5:android-instrumentation-test-runner:0.2.2"
+
+    // Add the Android Instrumentation Test dependencies to the product flavor only
+    // (with this, only the "experimental" flavor must have minSdkVersion 26)
+    androidTestExperimentalImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
+    androidTestExperimentalImplementation "de.mannodermaus.junit5:android-instrumentation-test:0.2.2"
+
+    // Runtime dependencies for Android Instrumentation Tests
+    androidTestExperimentalRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_version"
+    androidTestExperimentalRuntimeOnly "org.junit.platform:junit-platform-runner:$junit_platform_version"
 }

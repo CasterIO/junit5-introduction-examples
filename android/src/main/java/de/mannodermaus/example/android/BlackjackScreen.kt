@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
-import de.mannodermaus.example.*
 import de.mannodermaus.example.android.BlackjackActivity.Companion.EXTRA_PLAYER1_NAME
 import de.mannodermaus.example.android.BlackjackActivity.Companion.EXTRA_PLAYER2_NAME
+import de.mannodermaus.example.common.*
 import kotlinx.android.synthetic.main.activity_blackjack.*
 
 /**
