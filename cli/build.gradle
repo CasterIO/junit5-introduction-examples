@@ -1,6 +1,24 @@
 apply plugin: "kotlin"
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "skipped", "passed", "failed"
+    }
+}
+
 dependencies {
     implementation project(":common")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // JUnit 4
+    testImplementation "junit:junit:4.12"
+    // Running JUnit 4 tests on JUnit Jupiter
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junit_vintage_version"
+    // Running JUnit 5 tests on JUnit 4
+    testImplementation "org.junit.platform:junit-platform-runner:$junit_platform_version"
+
+    // JUnit Jupiter
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_jupiter_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_version"
 }

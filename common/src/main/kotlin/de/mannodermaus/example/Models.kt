@@ -81,11 +81,13 @@ data class Card(val rank: Rank, val suit: Suit) {
 /**
  * Represents the different suits for cards.
  */
-enum class Suit(private val symbol: String) {
-    Hearts("♥"),
-    Clubs("♣"),
+enum class Suit(private val symbol: String) : Comparable<Suit> {
+    // Intentionally ordered according to Skat values
+    // (i.e. Diamonds = lowest, Clubs = highest)
     Diamonds("♦"),
-    Spades("♠");
+    Hearts("♥"),
+    Spades("♠"),
+    Clubs("♣");
 
     override fun toString() = symbol
 
@@ -99,7 +101,7 @@ enum class Suit(private val symbol: String) {
 /**
  * Represents the different ranks for a card.
  */
-abstract class Rank private constructor(val symbol: String) {
+abstract class Rank private constructor(val symbol: String) : Comparable<Rank> {
 
     /**
      * The value of a card with this rank.
@@ -112,6 +114,8 @@ abstract class Rank private constructor(val symbol: String) {
     open fun value(currentSum: Int): Int = 0
 
     override fun toString(): String = symbol
+
+    override fun compareTo(other: Rank) = value(0).compareTo(other.value(0))
 
     abstract fun toLongString(): String
 
