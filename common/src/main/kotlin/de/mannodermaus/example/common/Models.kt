@@ -67,6 +67,7 @@ data class Card(val rank: Rank, val suit: Suit) {
     fun toLongString() = "${rank.toLongString()} of ${suit.toLongString()}"
 
     companion object {
+        @JvmStatic
         fun parse(string: String): Card {
             val suitValue = string.last().toString()
             val rankValue = string.dropLast(1)
