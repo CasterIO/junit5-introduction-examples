@@ -16,7 +16,7 @@ class DisplayNameTests {
     }
 
     @Test
-    @DisplayName("A Deck properly reports cards that it actually contains")
+    @DisplayName("A Deck properly reports cards that it actually contains \uD83D\uDC96")
     fun cardsThatAreContainedInTheDeckAreCorrectlyReported() {
         val card1 = Card(rank = Rank.Ace, suit = Suit.Spades)
         val card2 = Card(rank = Rank.Queen, suit = Suit.Hearts)

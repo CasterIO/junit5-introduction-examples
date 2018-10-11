@@ -19,7 +19,7 @@ import org.junit.jupiter.api.condition.EnabledIfSystemProperty
 class SystemPropertyTests {
 
     @Test
-    @EnabledIfSystemProperty(named = "some.property", matches = "true")
+    @EnabledIfSystemProperty(named = "config.value", matches = "true")
     fun onlyRunIfPropertyIsSet() {
         // Check that a Jack always has value 10
         assertTrue(Rank.Jack.value(0) == 10)
@@ -27,7 +27,7 @@ class SystemPropertyTests {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "some.property", matches = "true")
+    @DisabledIfSystemProperty(named = "config.value", matches = "true")
     fun onlyRunIfPropertyIsNotSet() {
         // Check that the symbol for the Suit of Spades is correct
         assertTrue(Suit.Spades.toString() == "♠")
