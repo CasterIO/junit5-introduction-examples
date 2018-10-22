@@ -6,6 +6,7 @@ import de.mannodermaus.example.common.Suit
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DynamicContainer.dynamicContainer
 import org.junit.jupiter.api.DynamicNode
+import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.DynamicTest.dynamicTest
 import org.junit.jupiter.api.TestFactory
 import java.nio.file.Files
@@ -20,7 +21,7 @@ class DynamicTests {
     // * Iterable<DynamicNode>
     // * DynamicNode[]
     @TestFactory
-    fun dynamicTestsGeneratedAtRuntime(): Stream<DynamicNode> {
+    fun dynamicTestsGeneratedAtRuntime(): Stream<DynamicTest> {
         // Create test methods from a text file.
         // Each entry in that file not starting with a '#' sign is parsed into 1 case.
         // We expect 3 comma-separated values per case, which are mapped
